@@ -5,16 +5,16 @@ import (
 
 	"github.com/dgraph-io/dgo/v210"
 	"github.com/dgraph-io/dgo/v210/protos/api"
-	"google.golang.org/grpc"
 )
 
 func newClient() *dgo.Dgraph {
-	conn, err := grpc.Dial("localhost:9080", grpc.WithInsecure())
-
+	// This example uses dgo
+	conn, err := dgo.DialCloud("https://blue-surf-591055.us-east-1.aws.cloud.dgraph.io/graphql", "YTZlYmRiZmIxZDg4MTM1MWFkMTQzNDZiYzcxNjE4MWM=")
 	if err != nil {
 		log.Fatal(err)
-		panic(err)
 	}
-	dgraph := dgo.NewDgraphClient(api.NewDgraphClient(conn))
-	return dgraph
+	defer conn.Close()
+	dgraphClient := dgo.NewDgraphClient(api.NewDgraphClient(conn))
+
+	return dgraphClient
 }

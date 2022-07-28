@@ -1,10 +1,11 @@
-module codenode.com/packages
+module codenode/packages
 
 go 1.18
 
 require (
 	github.com/dgraph-io/dgo/v210 v210.0.0-20220113041351-ba0e5dfc4c3e
 	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-chi/render v1.0.1
 	google.golang.org/grpc v1.48.0
 )
 

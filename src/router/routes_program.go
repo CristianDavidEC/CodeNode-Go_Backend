@@ -1,6 +1,8 @@
 package router
 
 import (
+	"codenode/packages/src/api"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -13,10 +15,10 @@ func Routing() *chi.Mux {
 		middleware.Recoverer,
 	)
 
-	routerMux.Post("/saveProgram", nil)
-	routerMux.Get("/getAllPrograms", nil)
-	routerMux.Get("/getProgram", nil)
-	routerMux.Get("/runProgram", nil)
+	routerMux.Post("/save-program", api.SaveProgram)
+	routerMux.Get("/get-all-programs", api.GetAllPrograms)
+	routerMux.Get("/get-program", api.GetProgram)
+	routerMux.Post("/run-program", api.RunProgram)
 
 	return routerMux
 }
