@@ -1,7 +1,6 @@
 package python
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 )
@@ -15,14 +14,13 @@ func WritePyFile(code string) string {
 	return response
 }
 
-func RunPyCode(code string) {
+func RunPyCode(code string) string {
 	WritePyFile(code)
 	cmd := exec.Command("python", "./script.py")
 	out, err := cmd.Output()
 
 	if err != nil {
-		fmt.Println("error to execute python script: ", err)
-		panic(err)
+		return "error to execute python script: " + err.Error()
 	}
-	fmt.Println(string(out))
+	return string(out)
 }

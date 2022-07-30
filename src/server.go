@@ -25,6 +25,6 @@ func NewServer(routerMux *chi.Mux) *ServerProgram {
 }
 
 func (s *ServerProgram) Run() {
-	fmt.Print("Running on port 3080")
+	fmt.Println("Running on port 3080")
 	log.Fatal(s.server.ListenAndServe())
 }
