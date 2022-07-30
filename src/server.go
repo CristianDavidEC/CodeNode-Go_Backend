@@ -9,11 +9,11 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-type MyServer struct {
+type ServerProgram struct {
 	server *http.Server
 }
 
-func NewServer(routerMux *chi.Mux) *MyServer {
+func NewServer(routerMux *chi.Mux) *ServerProgram {
 	server := &http.Server{
 		Addr:           ":3080",
 		Handler:        routerMux,
@@ -21,10 +21,10 @@ func NewServer(routerMux *chi.Mux) *MyServer {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-	return &MyServer{server}
+	return &ServerProgram{server}
 }
 
-func (s *MyServer) Run() {
+func (s *ServerProgram) Run() {
 	fmt.Print("Running on port 3080")
 	log.Fatal(s.server.ListenAndServe())
 }
