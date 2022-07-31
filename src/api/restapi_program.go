@@ -36,11 +36,13 @@ func GetProgram(w http.ResponseWriter, r *http.Request) {
 
 //Post : /save-program
 func SaveProgram(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Body)
+	fmt.Println(r.Body.)
 	idProgram := chi.URLParam(r, "id")
 	res := map[string]interface{}{"message": "Save Program"}
 	var program model.Program
 	_ = json.NewDecoder(r.Body).Decode(&program)
+
+
 
 	w.Write([]byte(idProgram))
 	w.Header().Set("Content-Type", "application/json")
