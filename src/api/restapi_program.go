@@ -2,7 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	database "codenode/packages/src/dataBase"
@@ -14,7 +13,6 @@ import (
 
 //Get : /get-all-programs
 func GetAllPrograms(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	res, err := database.AllProgramsDb()
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -36,19 +34,20 @@ func GetProgram(w http.ResponseWriter, r *http.Request) {
 
 //Post : /save-program
 func SaveProgram(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Body.)
-	idProgram := chi.URLParam(r, "id")
-	res := map[string]interface{}{"message": "Save Program"}
 	var program model.Program
 	_ = json.NewDecoder(r.Body).Decode(&program)
-
-
-
-	w.Write([]byte(idProgram))
+	newProgram, err := json.Marshal(program)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = database.SaveProgramdb(newProgram)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(res)
-
 }
 
 //Post : /run-program

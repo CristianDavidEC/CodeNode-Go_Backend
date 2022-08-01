@@ -1,2 +1,1 @@
-hola = 20 
-print("hola" , hola) 
+print("hola") 
