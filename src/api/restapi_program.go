@@ -13,7 +13,7 @@ import (
 
 //Get : /get-all-programs
 func GetAllPrograms(w http.ResponseWriter, r *http.Request) {
-	res, err := database.AllProgramsDb()
+	res, err := database.GetAllProgramsDb()
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -26,10 +26,14 @@ func GetAllPrograms(w http.ResponseWriter, r *http.Request) {
 //Get : /get-program
 func GetProgram(w http.ResponseWriter, r *http.Request) {
 	idProgram := chi.URLParam(r, "id")
-	res := map[string]interface{}{"message": string(idProgram)}
+	res, err := database.GetProgramDb(idProgram)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(res)
+	w.Write(res.Json)
 }
 
 //Post : /save-program
@@ -41,9 +45,9 @@ func SaveProgram(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = database.SaveProgramdb(newProgram)
+	err = database.SaveProgramDb(newProgram)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

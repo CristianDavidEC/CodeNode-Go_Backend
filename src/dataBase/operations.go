@@ -6,7 +6,7 @@ import (
 	"github.com/dgraph-io/dgo/v210/protos/api"
 )
 
-func AllProgramsDb() (api.Response, error) {
+func GetAllProgramsDb() (api.Response, error) {
 	dbClient := newClient()
 	txn := dbClient.NewTxn()
 	query := `
@@ -21,7 +21,24 @@ func AllProgramsDb() (api.Response, error) {
 	return *resp, err
 }
 
-func SaveProgramdb(newProgram []byte) error {
+func GetProgramDb(id string) (api.Response, error) {
+	dbClient := newClient()
+	txn := dbClient.NewTxn()
+	query := `
+	{getProgram(func: eq(id, ` + id + `)){
+			id
+			name
+			description
+			nodes
+			drawflow
+		}
+	}
+	`
+	resp, err := txn.Query(context.Background(), query)
+	return *resp, err
+}
+
+func SaveProgramDb(newProgram []byte) error {
 	dbClient := newClient()
 	txn := dbClient.NewTxn()
 
