@@ -7,8 +7,7 @@ import (
 )
 
 func GetAllProgramsDb() (api.Response, error) {
-	dbClient := newClient()
-	txn := dbClient.NewTxn()
+	txnClient := newClient()
 	query := `
 	{getAllPrograms(func: has(id)){
 			id 
@@ -17,13 +16,12 @@ func GetAllProgramsDb() (api.Response, error) {
 		}
 	}
 	`
-	resp, err := txn.Query(context.Background(), query)
+	resp, err := txnClient.Query(context.Background(), query)
 	return *resp, err
 }
 
 func GetProgramDb(id string) (api.Response, error) {
-	dbClient := newClient()
-	txn := dbClient.NewTxn()
+	txnClient := newClient()
 	query := `
 	{getProgram(func: eq(id, ` + id + `)){
 			id
@@ -34,18 +32,17 @@ func GetProgramDb(id string) (api.Response, error) {
 		}
 	}
 	`
-	resp, err := txn.Query(context.Background(), query)
+	resp, err := txnClient.Query(context.Background(), query)
 	return *resp, err
 }
 
 func SaveProgramDb(newProgram []byte) error {
-	dbClient := newClient()
-	txn := dbClient.NewTxn()
+	txnClient := newClient()
 
 	mutationdb := &api.Mutation{
 		CommitNow: true,
 		SetJson:   newProgram,
 	}
-	_, err := txn.Mutate(context.Background(), mutationdb)
+	_, err := txnClient.Mutate(context.Background(), mutationdb)
 	return err
 }
