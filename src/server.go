@@ -13,6 +13,7 @@ type ServerProgram struct {
 	server *http.Server
 }
 
+/*Create the backend server*/
 func NewServer(routerMux *chi.Mux) *ServerProgram {
 	server := &http.Server{
 		Addr:           ":3080",
@@ -24,6 +25,7 @@ func NewServer(routerMux *chi.Mux) *ServerProgram {
 	return &ServerProgram{server}
 }
 
+/*Execute the server*/
 func (s *ServerProgram) Run() {
 	fmt.Println("Running on port 3080")
 	log.Fatal(s.server.ListenAndServe())

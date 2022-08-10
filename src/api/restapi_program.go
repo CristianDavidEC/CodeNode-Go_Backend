@@ -12,7 +12,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-//Get : /get-all-programs
+/*Get : /get-all-programs*/
 func GetAllPrograms(w http.ResponseWriter, r *http.Request) {
 	res, err := database.GetAllProgramsDb()
 	if err != nil {
@@ -24,7 +24,7 @@ func GetAllPrograms(w http.ResponseWriter, r *http.Request) {
 	w.Write(res.Json)
 }
 
-//Get : /get-program
+/*Get : /get-program*/
 func GetProgram(w http.ResponseWriter, r *http.Request) {
 	idProgram := chi.URLParam(r, "id")
 	res, err := database.GetProgramDb(idProgram)
@@ -37,7 +37,7 @@ func GetProgram(w http.ResponseWriter, r *http.Request) {
 	w.Write(res.Json)
 }
 
-//Post : /save-program
+/*Post : /save-program*/
 func SaveProgram(w http.ResponseWriter, r *http.Request) {
 	var program model.Program
 	_ = json.NewDecoder(r.Body).Decode(&program)
@@ -56,7 +56,7 @@ func SaveProgram(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-//Post : /run-program
+/*Post : /run-program*/
 func RunProgram(w http.ResponseWriter, r *http.Request) {
 	var codePython model.CodePython
 	_ = json.NewDecoder(r.Body).Decode(&codePython)

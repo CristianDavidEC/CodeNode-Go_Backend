@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/cors"
 )
 
+/*Route management*/
 func Routing() *chi.Mux {
 	routerMux := chi.NewMux()
 	cors := cors.New(cors.Options{

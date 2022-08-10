@@ -7,6 +7,7 @@ import (
 	"github.com/dgraph-io/dgo/v210/protos/api"
 )
 
+/*Create the connection with the BD*/
 func newClient() *dgo.Txn {
 	conn, err := dgo.DialCloud("https://blue-surf-591055.us-east-1.aws.cloud.dgraph.io/graphql", "YTZlYmRiZmIxZDg4MTM1MWFkMTQzNDZiYzcxNjE4MWM=")
 	if err != nil {

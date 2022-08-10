@@ -6,6 +6,7 @@ import (
 	"github.com/dgraph-io/dgo/v210/protos/api"
 )
 
+/*Queries all programs stored in  the database*/
 func GetAllProgramsDb() (api.Response, error) {
 	txnClient := newClient()
 	query := `
@@ -20,6 +21,7 @@ func GetAllProgramsDb() (api.Response, error) {
 	return *resp, err
 }
 
+/*Query the program by id*/
 func GetProgramDb(id string) (api.Response, error) {
 	txnClient := newClient()
 	query := `
@@ -36,6 +38,7 @@ func GetProgramDb(id string) (api.Response, error) {
 	return *resp, err
 }
 
+/*Save the program in the db*/
 func SaveProgramDb(newProgram []byte) error {
 	txnClient := newClient()
 
