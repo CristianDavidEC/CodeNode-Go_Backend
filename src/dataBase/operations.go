@@ -3,12 +3,18 @@ package database
 import (
 	"context"
 
+	"github.com/dgraph-io/dgo/v210"
 	"github.com/dgraph-io/dgo/v210/protos/api"
 )
 
+var txnClient *dgo.Txn
+
+func SetTxnClient(client *dgo.Dgraph) {
+	txnClient = client.NewTxn()
+}
+
 /*Queries all programs stored in  the database*/
 func GetAllProgramsDb() (api.Response, error) {
-	txnClient := newClient()
 	query := `
 	{getAllPrograms(func: has(id)){
 			id 
@@ -23,7 +29,6 @@ func GetAllProgramsDb() (api.Response, error) {
 
 /*Query the program by id*/
 func GetProgramDb(id string) (api.Response, error) {
-	txnClient := newClient()
 	query := `
 	{getProgram(func: eq(id, ` + id + `)){
 			id
@@ -40,8 +45,6 @@ func GetProgramDb(id string) (api.Response, error) {
 
 /*Save the program in the db*/
 func SaveProgramDb(newProgram []byte) error {
-	txnClient := newClient()
-
 	mutationdb := &api.Mutation{
 		CommitNow: true,
 		SetJson:   newProgram,

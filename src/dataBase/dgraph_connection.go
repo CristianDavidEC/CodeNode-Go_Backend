@@ -1,20 +1,22 @@
 package database
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/dgraph-io/dgo/v210"
 	"github.com/dgraph-io/dgo/v210/protos/api"
 )
 
-/*Create the connection with the BD*/
-func newClient() *dgo.Txn {
-	conn, err := dgo.DialCloud("https://blue-surf-591055.us-east-1.aws.cloud.dgraph.io/graphql", "YTZlYmRiZmIxZDg4MTM1MWFkMTQzNDZiYzcxNjE4MWM=")
+//var txnClient *dgo.Txn
+
+/* Create the connection with the BD */
+func NewClient(connectionDb string, apiKey string) *dgo.Dgraph {
+	fmt.Println("Connecting to the database...")
+	conn, err := dgo.DialCloud(connectionDb, apiKey)
 	if err != nil {
 		log.Fatal(err)
 	}
 	dgraphClient := dgo.NewDgraphClient(api.NewDgraphClient(conn))
-	txnClient := dgraphClient.NewTxn()
-
-	return txnClient
+	return dgraphClient
 }
