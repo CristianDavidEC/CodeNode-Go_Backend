@@ -6,18 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	database "codenode/packages/src/dataBase"
-
 	"github.com/go-chi/chi/v5"
 )
 
 type ServerProgram struct {
 	server *http.Server
-}
-
-type Config struct {
-	databaseConecction string
-	apiKey             string
 }
 
 /*Create the backend server*/
@@ -33,10 +26,7 @@ func NewServer(routerMux *chi.Mux) *ServerProgram {
 }
 
 /*Execute the server*/
-func (s *ServerProgram) Run(config *Config) {
-	clientDb := database.NewClient(config.databaseConecction, config.apiKey)
-	database.SetTxnClient(clientDb)
-	log.Fatal(s.server.ListenAndServe())
+func (s *ServerProgram) Run() {
 	fmt.Println("Running on port 3080")
-
+	log.Fatal(s.server.ListenAndServe())
 }

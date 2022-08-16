@@ -3,15 +3,8 @@ package database
 import (
 	"context"
 
-	"github.com/dgraph-io/dgo/v210"
 	"github.com/dgraph-io/dgo/v210/protos/api"
 )
-
-var txnClient *dgo.Txn
-
-func SetTxnClient(client *dgo.Dgraph) {
-	txnClient = client.NewTxn()
-}
 
 /*Queries all programs stored in  the database*/
 func GetAllProgramsDb() (api.Response, error) {

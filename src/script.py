@@ -1,2 +1,1 @@
-nuevaVariable = 0 
-print("print") 
+print("vamos a probar esto") 
