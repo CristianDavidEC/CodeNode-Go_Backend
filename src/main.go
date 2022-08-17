@@ -1,7 +1,6 @@
 package main
 
 import (
-	database "codenode/packages/src/dataBase"
 	"codenode/packages/src/router"
 	"log"
 
@@ -13,7 +12,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env file %v\n", err)
 	}
-	database.NewClient()
 	routerMux := router.Routing()
 	server := NewServer(routerMux)
 	server.Run()

@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
+
+	database "codenode/packages/src/dataBase"
+	"codenode/packages/src/repository"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -27,6 +31,13 @@ func NewServer(routerMux *chi.Mux) *ServerProgram {
 
 /*Execute the server*/
 func (s *ServerProgram) Run() {
+	DATABASE_CONNECTION := os.Getenv("DATABASE_CONNECTION")
+	API_KEY := os.Getenv("API_KEY")
+	clientDb, err := database.NewDgraphClient(DATABASE_CONNECTION, API_KEY)
+	if err != nil {
+		log.Fatal(err)
+	}
+	repository.SetRepository(clientDb)
 	fmt.Println("Running on port 3080")
 	log.Fatal(s.server.ListenAndServe())
 }

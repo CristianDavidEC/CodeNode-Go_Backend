@@ -4,36 +4,36 @@ import (
 	"encoding/json"
 	"net/http"
 
-	database "codenode/packages/src/dataBase"
 	python "codenode/packages/src/execute"
 	"codenode/packages/src/model"
+	"codenode/packages/src/repository"
 
 	"github.com/go-chi/chi/v5"
 )
 
 /*Get : /get-all-programs*/
 func GetAllPrograms(w http.ResponseWriter, r *http.Request) {
-	res, err := database.GetAllProgramsDb()
+	res, err := repository.GetAllProgramsDb()
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(res.Json)
+	w.Write(res)
 }
 
 /*Get : /get-program*/
 func GetProgram(w http.ResponseWriter, r *http.Request) {
 	idProgram := chi.URLParam(r, "id")
-	res, err := database.GetProgramDb(idProgram)
+	res, err := repository.GetProgramDb(idProgram)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(res.Json)
+	w.Write(res)
 }
 
 /*Post : /save-program*/
@@ -45,12 +45,11 @@ func SaveProgram(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = database.SaveProgramDb(newProgram)
+	err = repository.SaveProgramDb(newProgram)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	//fmt.Println(string(newProgram))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }
