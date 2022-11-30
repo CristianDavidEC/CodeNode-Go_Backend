@@ -12,6 +12,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env file %v\n", err)
 	}
+
 	routerMux := router.Routing()
 	server := NewServer(routerMux)
 	server.Run()
